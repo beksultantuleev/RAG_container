@@ -1,44 +1,64 @@
-Project Configuration
-This document outlines the necessary environment variables for configuring and running the project. These variables are stored in a .env file in the root directory.
+# Project Configuration
 
-Creating the .env File
-The .env file is used to manage sensitive information and configuration settings. You must create this file and populate it with the required parameters before running the application.
+This document outlines the necessary environment variables for configuring and running the project. These variables are stored in a `.env` file in the root directory.
 
-Below are the configuration options, grouped by function.
+---
 
-1. Qdrant Configuration
+## Creating the .env File
+
+The `.env` file is used to manage sensitive information and configuration settings. You must create this file and populate it with the required parameters before running the application.
+
+---
+
+## Configuration Options
+
+Below are the configuration options, grouped by function:
+
+### 1. Qdrant Configuration
 These parameters define the connection to your Qdrant vector database instance.
 
-QDRANT_HOST: The hostname of your Qdrant service. If running with Docker Compose, this should match the service name defined in your docker-compose.yml (e.g., qdrant).
+- **QDRANT_HOST**:  
+  The hostname of your Qdrant service.  
+  - If running with Docker Compose, this should match the service name defined in your `docker-compose.yml` (e.g., `qdrant`).
+- **QDRANT_PORT**:  
+  The port for Qdrant's HTTP API.
+- **QDRANT_COLLECTION_NAME**:  
+  The name of the collection to be created in Qdrant for storing your vectors.
 
-QDRANT_PORT: The port for Qdrant's HTTP API.
-
-QDRANT_COLLECTION_NAME: The name of the collection to be created in Qdrant for storing your vectors.
-
-2. Embedding Model
+### 2. Embedding Model
 This parameter specifies the model used to convert text into vector embeddings.
 
-EMBEDDING_MODEL_NAME: The name of the sentence-transformers model. The default, all-MiniLM-L6-v2, is a good starting point for a fast and efficient model.
+- **EMBEDDING_MODEL_NAME**:  
+  The name of the sentence-transformers model.  
+  - The default `"all-MiniLM-L6-v2"` is a good starting point for a fast and efficient model.
 
-3. Ollama Configuration
+### 3. Ollama Configuration
 These settings are used to connect to your local or remote Ollama instance.
 
-OLLAMA_HOST: The IP address or hostname of your Ollama service. If Ollama is running on your host machine and you are using Docker, you may need to use host.docker.internal.
+- **OLLAMA_HOST**:  
+  The IP address or hostname of your Ollama service.  
+  - If Ollama is running on your host machine and you are using Docker, you may need to use `host.docker.internal`.
+- **OLLAMA_PORT**:  
+  The port of the Ollama service.
+- **OLLAMA_MODEL**:  
+  The name of the model you have downloaded and want to use (e.g., `llama3`, `mistral`, `gemma3`).
 
-OLLAMA_PORT: The port of the Ollama service.
-
-OLLAMA_MODEL: The name of the model you have downloaded and want to use (e.g., llama3, mistral, gemma3).
-
-4. OpenAI Configuration
+### 4. OpenAI Configuration
 These settings are used to connect to the OpenAI API.
 
-OPENAI_API_KEY: Your secret API key from OpenAI. Keep this key secure and do not commit it to your version control system.
+- **OPENAI_API_KEY**:  
+  Your secret API key from OpenAI.  
+  - **Important:** Keep this key secure and **do not commit it** to your version control system.
+- **OPENAI_MODEL**:  
+  The name of the OpenAI model to use for generation (e.g., `gpt-4o`, `gpt-4o-mini`, `gpt-4.1-mini`).
 
-OPENAI_MODEL: The name of the OpenAI model to use for generation (e.g., gpt-4o, gpt-4o-mini, gpt-4.1-mini).
+---
 
-Example .env File
-Below is a single example .env file that includes all configuration options. Simply uncomment the section for your preferred LLM provider (Ollama or OpenAI) before running.
+## Example .env File
 
+Below is a single example `.env` file that includes all configuration options. Simply uncomment the section for your preferred LLM provider (Ollama or OpenAI) before running.
+
+```dotenv
 # .env
 
 # -- Qdrant Configuration --
@@ -59,3 +79,29 @@ EMBEDDING_MODEL_NAME=all-MiniLM-L6-v2
 # -- OpenAI Configuration --
 # OPENAI_API_KEY=sk-xxxxxx
 # OPENAI_MODEL=gpt-4.1-mini
+
+
+
+
+Additional Notes
+
+
+
+
+
+When running the project inside Docker and connecting to services running on the host (such as Ollama on your machine), using host.docker.internal as OLLAMA_HOST is often necessary to allow container-to-host communication.
+
+
+
+Keep your .env file out of version control by adding it to .gitignore to protect sensitive credentials.
+
+
+
+You can swap out embedding models or language models to tailor the performance and capabilities of your application.
+
+
+
+Ensure ports used by Qdrant and Ollama are exposed and accessible, especially when using containerized deployments.
+
+
+
