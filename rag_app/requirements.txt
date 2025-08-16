@@ -6,3 +6,4 @@ sentence-transformers
 ollama
 openai
 httpx
+requests

@@ -1,14 +1,15 @@
 import requests
 import json
 
-API_URL = "http://localhost:8000/api/chat"  # Replace with your API base URL if different
+# API_URL = "http://localhost:8000/api/chat"  # Replace with your API base URL if different
+API_URL = "http://localhost:11434/api/chat"  # Replace with your API base URL if different
 
 def main():
     payload = {
         # "model": "gpt-4.1-mini",  # Use your configured model name here
         "model": "gemma3",  # Use your configured model name here
         "messages": [
-            {"role": "user", "content": "Hello"}
+            {"role": "user", "content": "what is the capital of France?"},
         ],
         "stream": False  # Non-streaming, get full response at once
     }
