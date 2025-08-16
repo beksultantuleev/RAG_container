@@ -1,0 +1,33 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant_db
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: always
+    networks:
+      - rag_network
+
+  rag-app:
+    build:
+      context: ./rag_app
+    container_name: rag_fastapi_app
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - qdrant
+    restart: always
+    networks:
+      - rag_network
+
+volumes:
+  qdrant_data:
+
+networks:
+  rag_network:
+    driver: bridge
